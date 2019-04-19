@@ -50,31 +50,28 @@ window.findNRooksSolution = function(n) {
 };
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
-window.countNRooksSolutions = function(n) {
+window.countNRooksSolutions = function(num) {
   var solutionCount = 0;
-  // create a board
-  var board = new Board({'n': n});
-  // toggle the first piece
-  // initialize a counter = 1
+  
+  var board = new Board({n: num});
 
-        // if hasAnyRooksConflicts 
-          // counter--
-          // return
-        // if counter === n
-          // solutionCount++
-          // return
-        // else :
-          // for loop incrementing row for i < n and i = 1
-            // for loop incrementing column for j < n and j = 0
-              // toggle next piece 
-              // counter++
-              // recursively call this function on the new board
-          // counter --
-          // increment solutionCount if 
+    var findSolution = function(board, row) {
+      for (let i = 0; i < board.attributes[row].length; i++) {
+        board.togglePiece(row, i);
+        if (!board.hasAnyRooksConflicts()) {
+          if (row === num - 1) {
+            solutionCount++;
+            board.togglePiece(row, i);
+            return;
+          }
+          findSolution(board, row + 1);
+        }
+        board.togglePiece(row, i);
+      }
+    }
+  findSolution(board, 0);
 
-  // call recursive function for first board;
-  //   
-  console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
+  console.log('Number of solutions for ' + num + ' rooks:', solutionCount);
   return solutionCount;
 };
 
