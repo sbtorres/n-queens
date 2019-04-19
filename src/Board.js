@@ -121,7 +121,7 @@
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
       let rowArrays = this.rows();
-      let numOfCols = rowArrays[0].length;
+      let numOfCols = rowArrays.length;
       for (let m = 0; m < numOfCols; m++) {
         let hasConflict = this.hasColConflictAt(m);
         if (hasConflict) {
