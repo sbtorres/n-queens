@@ -83,9 +83,38 @@ window.findNQueensSolution = function(num) {
   return solution;
 };
 
-window.countNQueensSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+window.countNQueensSolutions = function(num) {
+  if (num === 0) {
+    var solutionCount = 1;
+    console.log('Number of solutions for ' + num + ' queens:', solutionCount);
+    return solutionCount;
+  }
+  if (num === 2 || num === 3) {
+    var solutionCount = 0;
+    console.log('Number of solutions for ' + num + ' queens:', solutionCount);
+    return solutionCount;
+  }
 
-  console.log('Single solution for ' + n + ' queens:', solutionCount);
+  var solutionCount = 0;
+  var board = new Board({n: num});
+
+  var findSolution = function(board, row) {
+    for (let i = 0; i < num; i++) {
+      board.togglePiece(row, i);
+      if (!board.hasAnyQueensConflicts()) {
+        if (row === num - 1) {
+          solutionCount++;
+          board.togglePiece(row, i);
+          return;
+        }
+        findSolution(board, row + 1);
+      }
+      board.togglePiece(row, i);
+    }
+  };
+
+  findSolution(board, 0);
+
+  console.log('Number of solutions for ' + num + ' queens:', solutionCount);
   return solutionCount;
 };
